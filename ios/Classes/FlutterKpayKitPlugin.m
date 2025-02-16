@@ -1,20 +1,21 @@
-#import "FlutterKbzKitPlugin.h"
+#import "FlutterKpayKitPlugin.h"
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonCryptor.h>
 #import <CommonCrypto/CommonHMAC.h>
 #import <KBZPayAPPPay/PaymentViewController.h>
 
-@interface FlutterKbzPayPlugin () <FlutterStreamHandler>
+@interface FlutterKpayKitPlugin () <FlutterStreamHandler>
 @end
 
-@implementation FlutterKbzPayPlugin {
+
+@implementation FlutterKpayKitPlugin {
     FlutterEventSink _eventSink;
 }
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
             methodChannelWithName:@"flutter_kpay_kit"
                   binaryMessenger:[registrar messenger]];
-    FlutterKbzPayPlugin* instance = [[FlutterKbzPayPlugin alloc] init];
+    FlutterKpayKitPlugin* instance = [[FlutterKpayKitPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
     FlutterEventChannel* chargingChannel =
             [FlutterEventChannel eventChannelWithName:@"flutter_kpay_kit/pay_status"

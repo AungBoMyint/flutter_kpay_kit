@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface FlutterKpayKitPlugin : NSObject<FlutterPlugin>
+@interface FlutterKpayKitPlugin : NSObject <FlutterPlugin, FlutterStreamHandler>
 @end
