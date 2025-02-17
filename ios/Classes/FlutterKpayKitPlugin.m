@@ -39,20 +39,42 @@
     }
 }
 
-- (NSString *)startPay:(NSString*)appId :(NSString*)merchantCode :(NSString*)prepayId :(NSString*)signKey :(NSString*)urlScheme{
-
+- (NSString *)startPay:(NSString *)appId
+            :(NSString *)merchantCode
+            :(NSString *)prepayId
+            :(NSString *)signKey
+            :(NSString *)urlScheme {
+    
+    // Generate nonce and timestamp
     NSString *nonceStrTF = [self getRandomStr];
     NSString *timeSp = [self getCurrentTimes];
-    NSString *orderString = [NSString stringWithFormat:@"appid=%@&merch_code=%@&nonce_str=%@&prepay_id=%@&timestamp=%@",appId,merchantCode,nonceStrTF,prepayId,timeSp];
-    NSLog(@"orderString data %@",orderString);
-    NSString *signStr = [NSString stringWithFormat:@"%@&key=%@",orderString,signKey];
-    NSLog(@"signStr data %@",signStr);
+    
+    // Build the order string
+    NSString *orderString = [NSString stringWithFormat:@"appid=%@&merch_code=%@&nonce_str=%@&prepay_id=%@&timestamp=%@", appId, merchantCode, nonceStrTF, prepayId, timeSp];
+    NSLog(@"orderString data: %@", orderString);
+    
+    // Create the sign string
+    NSString *signStr = [NSString stringWithFormat:@"%@&key=%@", orderString, signKey];
+    NSLog(@"signStr data: %@", signStr);
+    
+    // Generate the SHA256 signature
     NSString *sign = [self SHA256WithSignString:signStr];
-    NSLog(@"sign data %@",sign);
+    NSLog(@"sign data: %@", sign);
+    
+    // Initialize the PaymentViewController and start payment process
     PaymentViewController *vc = [PaymentViewController new];
-    [vc startPaywithOrderInfo:orderString signType:@"SHA256" sign:sign appScheme:urlScheme];
+    if (vc) {
+        // Call the method to initiate the payment
+        [vc startPayWithOrderInfo:orderString signType:@"SHA256" sign:sign appScheme:urlScheme];
+        NSLog(@"Payment method started");
+    } else {
+        NSLog(@"Error: PaymentViewController is nil");
+    }
+    
+    // Return the order string
     return orderString;
 }
+
 
 #pragma mark FlutterStreamHandler impl
 
