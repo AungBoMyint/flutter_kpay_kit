@@ -50,7 +50,7 @@
     NSString *sign = [self SHA256WithSignString:signStr];
     NSLog(@"sign data %@",sign);
     PaymentViewController *vc = [PaymentViewController new];
-    [vc startPayWithOrderInfo:orderString signType:@"SHA256" sign:sign appScheme:urlScheme];
+    [vc startPaywithOrderInfo:orderString signType:@"SHA256" sign:sign appScheme:urlScheme];
     return orderString;
 }
 
